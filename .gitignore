@@ -1,0 +1,16 @@
+# Personal palace — don't commit your actual palace to the shared repo
+my-palace/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Private context files (if you fork and add your own)
+*.private.md
+*.secret.*
