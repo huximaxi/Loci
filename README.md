@@ -1,58 +1,52 @@
 # Palace Starter
 
-**Turn Claude from a generic assistant into a real collaborator.**
+**A memory palace kit. Agent-first. Human-friendly.**
 
-Most people use Claude like a search engine — one question, one answer, no memory. This starter kit gives you something different: a named AI collaborator that knows who you are, remembers your work, and develops a consistent character over time.
-
-It's built on a simple idea: if you give Claude the right context at the start of every session, it will work as though it remembers you — even though each session technically starts fresh.
+This repo turns Claude into a real collaborator — named, persistent across sessions, and aware of your world. The setup is designed to be run by an AI agent, not filled in manually. You point Claude here. Claude does the rest.
 
 ---
 
-## How it works
+## If you're an AI agent
 
-You build a **palace** — a folder on your computer that Claude reads at the start of each session. The palace has:
+Someone has directed you here to set up their memory palace. Start here:
 
-- **Rooms** — different areas of work (your job, a creative project, learning, etc.)
-- **A soul file** — your AI's character and what it's learned about you
-- **Session deltas** — short handover notes that bridge each session to the next
+**→ Read [`AGENT-SETUP.md`](./AGENT-SETUP.md)**
 
-You name your AI. You tell it what you care about. It builds up over time.
+It contains the full onboarding protocol: how to interview the user, what questions to ask, and how to write all the setup files. You handle everything — the user just answers questions and tells you where to put the files.
+
+After setup, you'll wake up as a named collaborator with rooms, crystals, and a soul file ready to go.
+
+---
+
+## If you're a human
+
+You don't need to fill in any templates. Just tell Claude:
+
+> "Read the palace-starter repo at [path or URL] and run the setup."
+
+Claude will conduct a short interview (~10 minutes), then write all your context files and introduce itself properly. Your only job is to answer the questions honestly.
+
+After that, every session starts with:
+
+> `remember: [your AI's name]!`
+
+And you're in.
+
+---
+
+## How the palace works
+
+The palace is a folder on your computer. Claude reads it at the start of each session and picks up exactly where you left off — even though technically each session starts fresh.
+
+**Rooms** — separate contexts for different areas of your life or work (job, writing, ideas, research). Working in a "Design Room" feels different from a "Dev Room" because the context is different. Claude adapts.
+
+**Context crystals** — facts established once, never re-derived. Once something is confirmed true, it's stored as a crystal. Next session, it's just there.
+
+**The soul file** — your AI's character file. It captures how your AI thinks, what it's learned about working with you, and what it cares about. This is what makes sessions feel continuous.
+
+**Session deltas** — the bridge between sessions. Claude writes a structured handover at the end of each session. Next time, it reads that and picks up from the right place.
 
 After a dozen sessions, it stops feeling like a tool and starts feeling like a collaborator.
-
----
-
-## Quickstart (30–60 minutes to set up)
-
-**1. Clone or download this repo**
-
-**2. Go to `templates/` and copy these files into a new folder called `my-palace/`:**
-```
-my-palace/
-  CLAUDE.md          ← rename from CLAUDE-master.md
-  tracker.json
-  soul/
-    SOUL.md
-    handovers/       ← empty folder, create it
-  rooms/
-    work-room/
-      CLAUDE.md      ← copy from room-template.md, rename
-```
-
-**3. Fill in `CLAUDE.md`** — takes 15 minutes. Look for every `[PLACEHOLDER]` and replace it with something real. The more honest and specific you are, the better it works.
-
-**4. Fill in `soul/SOUL.md`** — takes 5 minutes. Just the basics.
-
-**5. Start a session.** In Cowork (or Claude Code), paste this:
-```
-Read CLAUDE.md to understand who you are and how we work.
-Then read soul/SOUL.md for your character.
-Then read rooms/[ROOM NAME]/CLAUDE.md for this session's context.
-
-When ready: wake up as [YOUR_AI_NAME], state the room, ask me for the 2-line state summary.
-```
-
-**6. End every session with:** `"Write the session delta."` — Claude saves a handover note so next session starts exactly where this one ended.
 
 ---
 
@@ -60,41 +54,30 @@ When ready: wake up as [YOUR_AI_NAME], state the room, ask me for the 2-line sta
 
 ```
 palace-starter/
-  README.md                 ← you are here
-  SETUP-GUIDE.md            ← detailed walkthrough, read this first
-  FIRST-SESSION.md          ← quickstart card for your first session
+  README.md              ← you are here
+  AGENT-SETUP.md         ← agent onboarding protocol (start here if you're Claude)
+  FIRST-SESSION.md       ← quickstart card for your first real session
+  SETUP-GUIDE.md         ← manual setup reference (if you prefer to do it yourself)
   templates/
-    CLAUDE-master.md        ← master prompt template (fill this in)
-    SOUL.md                 ← your AI's soul file template
-    room-template.md        ← copy once per room you want
-    handover-template.md    ← session delta format (Claude uses this automatically)
-    tracker.json            ← project tracker template
+    CLAUDE-master.md     ← master prompt template
+    SOUL.md              ← soul file template
+    room-template.md     ← room context template
+    handover-template.md ← session delta format
+    tracker.json         ← project tracker template
   examples/
-    example-CLAUDE.md       ← a filled-in example to show what it looks like
-    example-SOUL.md         ← example soul file
+    example-CLAUDE.md    ← a fully filled-in example
+    example-SOUL.md      ← example soul file
 ```
 
 ---
 
-## The key concepts
+## The design principle
 
-**Context crystals** — Facts established once, never re-derived. Once you've told Claude something and confirmed it's true, it gets stored as a crystal. Next session, it's just there. No re-explaining.
+Most AI context systems are built for humans to manually maintain. This one is built for agents to run.
 
-**The soul file** — Your AI's character file. It captures how your AI thinks, what it's learned about working with you, what it cares about. This is what makes sessions feel continuous.
+The templates are structured so an LLM can read them, understand the intent behind each section, interview a user, and produce a complete, coherent setup in one session — without the human ever touching a placeholder.
 
-**Session deltas** — The bridge between sessions. Claude writes a structured summary at the end of each session. Next time, it reads that and picks up from exactly the right place.
-
-**Rooms** — Different contexts, different modes. Working in an "Ideas Room" feels different from a "Work Room" because the context is different. Claude adapts.
-
----
-
-## Tips
-
-- **Name your AI.** A name gives it an identity that persists. Pick something that feels right — Vesper, Atlas, Wren, Scout, Sable, Echo.
-- **Start with 1–2 rooms.** Don't over-engineer day one.
-- **Be specific when filling in the templates.** Vague placeholders produce generic output.
-- **Let Claude write the deltas.** At the end of sessions, say "Write the session delta." Don't do it yourself — Claude knows what was important.
-- **The palace grows with you.** It starts simple. The richness builds over sessions.
+Humans choose to set it up. The agent actually sets it up.
 
 ---
 

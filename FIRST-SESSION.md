@@ -4,10 +4,14 @@
 
 ## Before you start
 
-Make sure you've filled in (at minimum):
+**If you ran agent setup** (i.e. you told Claude to read this repo and run the setup): your files are already written. Skip straight to "How to start a session" below.
+
+**If you're setting up manually**: make sure you've filled in at minimum:
 - ✅ `templates/CLAUDE-master.md` → renamed and saved as `CLAUDE.md` in your palace folder
 - ✅ `templates/SOUL.md` → saved as `soul/SOUL.md`
 - ✅ At least one room file → `rooms/[room-name]/CLAUDE.md`
+
+See `SETUP-GUIDE.md` for the full walkthrough, or `AGENT-SETUP.md` to have Claude do it for you.
 
 ---
 
