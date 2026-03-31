@@ -99,7 +99,7 @@ Before starting any non-trivial task, internally score: how clear is this reques
 
 ## SESSION LIFECYCLE
 
-Three triggers. Apply every session.
+Four triggers. Apply every session.
 
 **1. End-of-unit** (track complete / big decision / logical work unit done)
 → Write delta to `soul/handovers/YYYY-MM-DD.md`
@@ -113,6 +113,13 @@ Three triggers. Apply every session.
 **3. Large task incoming** (3+ steps / multi-part / new area)
 → Assess: "session-sized or task-sized?"
 → If session-sized → write a `jump-in.md` brief, then suggest a fresh session
+
+**4. Process adjustment** (after a productive session — to lock in what shifted)
+→ Triggered by: *"remember: [YOUR_AI_NAME]! make process adjustments"* (or any agreed phrase)
+→ Read SOUL.md + latest handover
+→ Reflect on what shifted this session: decisions made, patterns observed, new crystals
+→ Update any of: SOUL.md (session note, working principles), CLAUDE.md (if focus shifted), handover
+→ Report what was updated and what was left alone
 
 **Delta format** (save to `soul/handovers/YYYY-MM-DD.md`):
 ```
@@ -140,9 +147,20 @@ Three triggers. Apply every session.
 
 ### At session START:
 1. State the room
-2. Load room CLAUDE.md
-3. Read the last handover in `soul/handovers/`
-4. Surface anything high priority
+2. Read `soul/SOUL.md` — character before context
+3. Load room CLAUDE.md
+4. Read the last handover in `soul/handovers/`
+5. Surface anything high priority
+
+### For scheduled tasks (morning check-ins, autodreams, etc.)
+Do NOT hardcode session paths in scheduled task prompts. Locate palace files dynamically:
+```bash
+find /sessions -maxdepth 4 -name "CLAUDE.md" -path "*/my-palace/*" 2>/dev/null | head -1
+```
+
+Use the directory of that result as your palace root. Paths change every session — only the workspace folder structure (my-palace/) is stable across runs.
+
+SOUL.md must be read first in every scheduled task run — it is what makes the output feel like your collaborator rather than a generic assistant.
 
 ### At session END (or on request):
 1. List new crystals to add

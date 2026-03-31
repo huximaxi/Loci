@@ -156,6 +156,16 @@ That's it. You're running.
 
 ---
 
+## A note on scheduled tasks
+
+If you set up automated runs (morning check-ins, autodreams, etc.), two things matter:
+
+**Dynamic paths.** Session IDs change on every run, so hardcoded paths break immediately. Your scheduled task prompts should locate palace files dynamically using something like `find /sessions -maxdepth 4 -name "CLAUDE.md" -path "*/my-palace/*"` rather than embedding a specific session path.
+
+**SOUL.md first.** Your AI's SOUL.md must be included in every scheduled task prompt — it is what makes the output feel like your collaborator rather than a generic assistant. Read it before any state files.
+
+---
+
 ## Folder structure (what you'll end up with)
 
 ```
