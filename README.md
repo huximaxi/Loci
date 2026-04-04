@@ -56,6 +56,7 @@ After a dozen sessions, it stops feeling like a tool and starts feeling like a c
 palace-starter/
   README.md              ← you are here
   AGENT-SETUP.md         ← agent onboarding protocol (start here if you're Claude)
+  PROCESSES.md           ← agent-executable processes (add-friend, etc.)
   FIRST-SESSION.md       ← quickstart card for your first real session
   SETUP-GUIDE.md         ← manual setup reference (if you prefer to do it yourself)
   templates/
@@ -64,6 +65,7 @@ palace-starter/
     room-template.md     ← room context template
     handover-template.md ← session delta format
     tracker.json         ← project tracker template
+    obsidian-mindmap-starter.md ← Obsidian canvas template
   examples/
     example-CLAUDE.md    ← a fully filled-in example
     example-SOUL.md      ← example soul file

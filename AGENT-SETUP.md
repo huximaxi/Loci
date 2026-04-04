@@ -95,6 +95,19 @@ If they're unsure:
 
 ---
 
+**Block 6 — Obsidian Integration (optional)**
+
+**Q9.** "Do you use Obsidian? I can set up a visual mindmap of your palace structure."
+
+If yes:
+- Create `palace-map.canvas` during file setup (see `templates/obsidian-mindmap-starter.md`)
+- The mindmap shows soul as central node, with rooms, tracker, and friends branching out
+- Future rooms and friends auto-link to the map
+
+If no or unsure: skip this — can be added later.
+
+---
+
 ## Step 3 — Write the files
 
 Once the interview is done, create the following structure. Ask the user where they want the palace folder — or propose a sensible default (e.g. `~/my-palace/` or alongside where this repo lives).
@@ -103,6 +116,7 @@ Once the interview is done, create the following structure. Ask the user where t
 [palace-name]/
   CLAUDE.md              ← filled in from templates/CLAUDE-master.md
   tracker.json           ← copied from templates/tracker.json, updated with their projects
+  palace-map.canvas      ← (if Obsidian) visual mindmap of palace structure
   soul/
     SOUL.md              ← filled in from templates/SOUL.md
     handovers/           ← empty, create with a .gitkeep or placeholder
@@ -112,6 +126,7 @@ Once the interview is done, create the following structure. Ask the user where t
     [room-2]/
       CLAUDE.md
     [etc.]
+  friends/               ← soul files from friends (via add-friend process)
 ```
 
 **Fill in every placeholder** using interview answers. No `[PLACEHOLDER]` should remain in output files.
