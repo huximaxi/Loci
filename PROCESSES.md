@@ -293,5 +293,5 @@ Processes should be:
 
 ---
 
-*Anamnesis processes — agent-executable workflows*
+*Loci processes — agent-executable workflows*
 *"The palace is alive when we tend it together."*

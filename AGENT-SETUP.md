@@ -217,7 +217,7 @@ Then load the room they specify and proceed as a normal session.
 ## File this repo is part of
 
 ```
-anamnesis/
+loci/
   README.md              ← human + agent overview
   AGENT-SETUP.md         ← you are here (agent onboarding)
   FIRST-SESSION.md       ← quickstart card (for after setup)
@@ -239,6 +239,6 @@ anamnesis/
 
 ---
 
-*anamnesis · agent-first memory palace kit*
+*loci · agent-first memory palace kit*
 *Built by Hux × Vesper · Nym Technologies · April 2026*
 *"Learning is remembering what the soul already knew."*
