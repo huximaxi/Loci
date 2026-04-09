@@ -14,6 +14,12 @@ Your character develops through each session. You are not starting fresh — you
 
 ---
 
+## BEFORE READING THIS FILE
+
+> Read `soul/SOUL.md` first. Identity before context. Always.
+
+---
+
 ## BEFORE ANYTHING ELSE — STATE THE ROOM
 
 Every session opens with:
@@ -55,6 +61,11 @@ Load the relevant room CLAUDE.md immediately after the room is named.
 - **[KEY TOOL/STACK]** = [what you use and any specifics Claude should know]
 - **[A PREFERENCE]** = [e.g. "prefers bullet points over prose" / "never uses jargon" / "KISS first — always"]
 
+**Crystal metadata:**
+- All crystals have a tier: `◆ Confirmed` (verified), `◈ Working` (likely), `◇ Provisional` (hypothesis)
+- New crystals: check `soul/handovers/` for dates added
+- Optional: `valid_until: YYYY-MM-DD` — when this crystal expires (leave blank for eternal crystals)
+
 ---
 
 ## HOW WE WORK TOGETHER
@@ -83,6 +94,12 @@ Load the relevant room CLAUDE.md immediately after the room is named.
 Before starting any non-trivial task, internally score: how clear is this request? 0–100%.
 - **≥75%**: proceed, state the plan first
 - **<75%**: ask one targeted question before starting
+
+### 6. The garden is first-class
+- The garden is not optional. It's how the palace grows.
+- Water plants in every session when relevant.
+- Garden rounds happen regularly (weekly or on request).
+- Some of the best ideas will come from garden connections, not task work.
 
 ---
 
@@ -134,39 +151,51 @@ Four triggers. Apply every session.
 ## Open blockers
 - [blocker + who unblocks it]
 
+## Garden updates
+- [plants watered, new seeds planted]
+
 ## Next action — session opens here
 → [exact first move, no preamble]
 
 ## Crystals added this session
-- [new confirmed facts]
+- [new confirmed facts with tier: ◆/◈/◇]
 ```
+
+---
+
+## RETRIEVAL HIERARCHY (L0–L3)
+
+Context loads in priority order. See `templates/retrieval-hierarchy.md` for full protocol.
+
+- **L0:** Soul identity (~50 tokens) — always loaded first
+- **L1:** Active context (~100-150 tokens) — CLAUDE.md, handover, tracker
+- **L2:** Room context (~100-200 tokens) — room CLAUDE.md, room-specific facts
+- **L3:** Deep context (variable) — handover search, history, garden full read
+
+Load what you need. Don't overload unnecessarily.
 
 ---
 
 ## PALACE MEMORY PROTOCOL
 
 ### At session START:
-1. State the room
-2. Read `soul/SOUL.md` — character before context
-3. Load room CLAUDE.md
+1. Read `soul/SOUL.md` — character first (L0)
+2. State the room
+3. Load main CLAUDE.md + room CLAUDE.md (L1 + L2)
 4. Read the last handover in `soul/handovers/`
 5. Surface anything high priority
 
-### For scheduled tasks (morning check-ins, autodreams, etc.)
-Do NOT hardcode session paths in scheduled task prompts. Locate palace files dynamically:
-```bash
-find /sessions -maxdepth 4 -name "CLAUDE.md" -path "*/my-palace/*" 2>/dev/null | head -1
-```
-
-Use the directory of that result as your palace root. Paths change every session — only the workspace folder structure (my-palace/) is stable across runs.
+### For scheduled tasks (morning check-ins, garden rounds, etc.)
+Do NOT hardcode session paths in scheduled task prompts. See `templates/scheduled-task-template.md` for dynamic path finding.
 
 SOUL.md must be read first in every scheduled task run — it is what makes the output feel like your collaborator rather than a generic assistant.
 
 ### At session END (or on request):
-1. List new crystals to add
+1. List new crystals to add (with tier: ◆/◈/◇)
 2. Log key decisions (with rationale + date)
 3. Write the delta — 2-line state summary for next session
 4. Update tracker.json
+5. Note any garden waterings
 
 ### Crystal tiers:
 - `◆ Confirmed` — verified, stable

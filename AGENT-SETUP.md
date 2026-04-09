@@ -95,9 +95,34 @@ If they're unsure:
 
 ---
 
-**Block 6 — Obsidian Integration (optional)**
+**Block 6 — The Garden**
 
-**Q9.** "Do you use Obsidian? I can set up a visual mindmap of your palace structure."
+**Q9.** "What are you curious about beyond your immediate work? Things you'd want to explore even if they're not directly useful."
+
+*(Seed the garden. These become plants you water over time. Example: "How do I think more clearly?" / "What makes a beautiful interface?" / "How do you actually build trust?")*
+
+Let them list 1–3 things. These become the first plants. If they're unsure, say:
+> "These are just seeds. Things you're interested in thinking about more. Not urgent, not for a project — just worth cultivating."
+
+---
+
+**Block 7 — Scheduled Tasks (optional)**
+
+**Q10.** "Would you like scheduled check-ins? I can do morning briefs (daily), garden rounds (weekly), or deeper synthesis (monthly)."
+
+If yes:
+- Ask which cadence: "Which sounds useful — daily morning briefs, weekly garden rounds, or monthly deep looks?"
+- Morning briefs: state + priorities + one question
+- Garden rounds: water each plant, propose new seeds
+- Deep synthesis: patterns, principles, growth
+
+If no or later: skip for now — can add anytime.
+
+---
+
+**Block 8 — Obsidian Integration (optional)**
+
+**Q11.** "Do you use Obsidian? I can set up a visual mindmap of your palace structure."
 
 If yes:
 - Create `palace-map.canvas` during file setup (see `templates/obsidian-mindmap-starter.md`)
@@ -119,6 +144,7 @@ Once the interview is done, create the following structure. Ask the user where t
   palace-map.canvas      ← (if Obsidian) visual mindmap of palace structure
   soul/
     SOUL.md              ← filled in from templates/SOUL.md
+    garden.md            ← filled in from templates/garden-template.md (with seeds from Q9)
     handovers/           ← empty, create with a .gitkeep or placeholder
   rooms/
     [room-1]/
@@ -126,6 +152,7 @@ Once the interview is done, create the following structure. Ask the user where t
     [room-2]/
       CLAUDE.md
     [etc.]
+  souls/                 ← additional personas (if created)
   friends/               ← soul files from friends (via add-friend process)
 ```
 
@@ -137,6 +164,18 @@ Where the user didn't specify something, use a reasonable inference — but mark
 - `◆ Confirmed` — they said it directly
 - `◈ Working` — reasonable inference from their answers
 - `◇ Provisional` — you're guessing; flag for them to review
+
+**Garden setup (Q9):**
+- Take the 1–3 things they mentioned as first plants
+- Create plants with seed thoughts
+- Mark all as "Waterings: (none yet — awaiting first session)"
+
+**Scheduled tasks setup (Q10):**
+- If they chose morning briefs: set up task at preferred time (default 9am)
+- If they chose garden rounds: set up weekly task (default Sunday 6pm)
+- If they chose deep synthesis: set up monthly task (default first of month)
+- Use templates/scheduled-task-template.md as reference
+- Ensure dynamic path finding is used (don't hardcode paths)
 
 ---
 
@@ -178,17 +217,28 @@ Then load the room they specify and proceed as a normal session.
 ## File this repo is part of
 
 ```
-palace-starter/
+anamnesis/
   README.md              ← human + agent overview
-  AGENT-SETUP.md         ← you are here
+  AGENT-SETUP.md         ← you are here (agent onboarding)
   FIRST-SESSION.md       ← quickstart card (for after setup)
   SETUP-GUIDE.md         ← manual setup reference (if needed)
-  templates/             ← source files for setup
+  PROCESSES.md           ← agent-executable workflows
+  templates/
+    CLAUDE-master.md     ← master prompt template
+    SOUL.md              ← soul file template
+    garden-template.md   ← garden template (first-class)
+    persona-template.md  ← template for additional personas
+    scheduled-task-template.md ← templates for morning briefs, garden rounds, etc.
+    retrieval-hierarchy.md ← L0–L3 context loading protocol
+    room-template.md     ← room context template
+    handover-template.md ← session delta format
+    tracker.json         ← project tracker template
+    obsidian-mindmap-starter.md ← Obsidian canvas template
   examples/              ← filled-in reference examples
 ```
 
 ---
 
-*palace-starter · agent-first onboarding protocol*
-*Hux × Vesper · Nym Technologies · March 2026*
-*"A collaborator, not a tool."*
+*anamnesis · agent-first memory palace kit*
+*Built by Hux × Vesper · Nym Technologies · April 2026*
+*"Learning is remembering what the soul already knew."*
