@@ -38,9 +38,15 @@ After that, every session starts with `remember: [your AI's name]!` — and you'
 
 **Session deltas** — structured handovers that bridge sessions. Your AI writes one at the end, reads it at the start. The gap between sessions disappears.
 
-**Scheduled tasks** — morning check-ins, garden rounds, deep synthesis. The palace tends itself between sessions.
+**Autodream** — weekly scheduled palace housekeeping. Garden round + pattern scan + stale tracker check. Runs without you.
+
+**Daily routine check-in** — a personalised morning brief shaped by how you actually start your day. Not a generic status dump.
 
 **L0–L3 retrieval** — context loads in priority layers (soul identity → active state → room context → deep history), not all-or-nothing.
+
+**Portable across tools** — the palace is file-based. It works identically in Claude Code (terminal), Cowork (desktop), or the web interface. Optional MCP integrations (Figma, Jira, Zulip) differ by environment — the palace itself doesn't.
+
+**Modules** — optional integrations that extend the check-in. Currently: Zulip digest (`modules/zulip-crawler/`). Jira via Atlassian MCP.
 
 ---
 
@@ -76,7 +82,7 @@ Pick Loci if you want your AI to feel like a colleague after a dozen sessions. P
 loci/
   README.md              ← you are here
   AGENT-SETUP.md         ← agent onboarding protocol
-  PROCESSES.md           ← agent-executable processes (garden-round, add-persona, etc.)
+  PROCESSES.md           ← agent-executable processes (garden-round, autodream, etc.)
   FIRST-SESSION.md       ← quickstart card
   SETUP-GUIDE.md         ← manual setup reference
   templates/
@@ -84,7 +90,7 @@ loci/
     SOUL.md              ← soul file template
     garden-template.md   ← garden template (first-class)
     persona-template.md  ← persona creation template
-    scheduled-task-template.md ← morning briefs, garden rounds
+    scheduled-task-template.md ← morning briefs, garden rounds, Zulip digest
     retrieval-hierarchy.md ← L0–L3 context loading protocol
     room-template.md     ← room context template
     handover-template.md ← session delta format
@@ -93,6 +99,8 @@ loci/
   examples/
     example-CLAUDE.md    ← filled-in example
     example-SOUL.md      ← example soul file
+  modules/
+    zulip-crawler/       ← optional: Zulip digest → morning check-in
 ```
 
 ---

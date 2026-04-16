@@ -10,6 +10,9 @@
 |---------|---------|--------------|
 | `garden-round` | "Let's do a garden round" | Waters each plant, proposes new seeds, notes growth |
 | `morning-check-in` | "Check in" or scheduled task | Reads palace state, surfaces priorities, asks one question |
+| `autodream` | "Autodream" or weekly scheduled | Garden round + pattern scan + stale tracker check — palace tends itself |
+| `daily-routine` | "Check in" or daily scheduled | Personalised morning brief shaped by your actual daily rhythm |
+| `zulip-checkin` | "Zulip digest" or auto-piped | Pulls Zulip digest → surfaces decisions/blockers/@mentions |
 | `add-persona` | "Add a new persona" | Creates a named collaborator with soul file |
 | `add-friend` | "Add [name] as a friend" | Copies their soul.md into your palace, commits to git |
 | `update-mindmap` | "Update the mindmap" | Refreshes palace-map.canvas with current structure |
@@ -272,6 +275,185 @@ Friends let you:
    git commit -m "update palace mindmap"
 5. Confirm: "Mindmap updated with [N] rooms, [M] friends."
 ```
+
+---
+
+## Process: `autodream`
+
+**Trigger phrases:**
+- "Autodream" (manual)
+- "Run autodream"
+- Scheduled task (automatic weekly)
+
+### What it does
+
+Autodream is the palace tending itself. It's a combined garden round + state surface + pattern scan. Runs weekly by default (Sunday evening). Can be triggered manually at any time.
+
+1. Reads soul (identity first)
+2. Reads CLAUDE.md + tracker.json + last handover
+3. Waters each active garden plant
+4. Surfaces any patterns or shifts from the week
+5. Proposes 1–2 new garden seeds or crystal upgrades
+6. Notes open trackers that are stale or overdue
+7. Writes a short autodream log to `soul/handovers/autodream-[DATE].md`
+
+### Agent Protocol
+
+```
+1. Read soul/SOUL.md (L0 identity)
+2. Read CLAUDE.md + tracker.json (L1 state)
+3. Read last handover from soul/handovers/
+4. Read soul/garden.md (full garden state)
+
+5. Garden round:
+   For each active plant:
+   a. Add one watering entry (today's date + observation)
+   b. Note if plant has matured into a crystal
+   c. Propose upgrade if ready
+
+6. Pattern scan:
+   - Any crystals that should be promoted/archived?
+   - Any tracker items stuck in the same state for 2+ weeks?
+   - Any new connections between rooms?
+
+7. Propose 1–2 new seeds
+
+8. Write autodream log to soul/handovers/autodream-[DATE].md
+
+9. Confirm: "Autodream complete — [N] plants watered, [M] patterns surfaced."
+   If manual: offer a 1-line summary per finding
+   If scheduled: write to file only (no chat output unless configured)
+```
+
+### Autodream Log Format
+
+```markdown
+# Autodream — [DATE]
+
+**Garden:**
+- [Plant]: [watering]
+- [Plant]: [watering]
+[+ any new seeds]
+
+**Patterns:**
+- [Pattern or observation]
+
+**Stale tracks:**
+- [Track name]: [last updated, suggested action]
+
+**Crystal activity:**
+- Promoted: [if any]
+- Archived: [if any]
+
+**Seeds planted:**
+1. [Seed]
+2. [Seed]
+```
+
+---
+
+## Process: `daily-routine`
+
+**Trigger phrases:**
+- "Morning check-in" (manual)
+- "Check in"
+- Scheduled task (automatic daily)
+
+### What it does
+
+A personalized morning brief shaped by how the user actually starts their day — drawn from the `Daily rhythm` crystal set during onboarding. Not a generic status dump: reads their routine and meets them there.
+
+1. Reads soul (L0 identity)
+2. Reads daily rhythm crystal (how they actually start their day)
+3. Reads CLAUDE.md + tracker + last handover
+4. If Zulip checkin enabled: reads latest `digest.md` from zulip module
+5. If Jira checkin enabled: pulls open/assigned tickets via MCP
+6. Surfaces 1–3 priorities shaped by their routine context
+7. Proposes 1–2 ideas or connections
+8. Asks one genuine question
+
+### Agent Protocol
+
+```
+1. Read soul/SOUL.md (L0)
+2. Read CLAUDE.md — find Daily rhythm crystal
+3. Read tracker.json (active tracks)
+4. Read last handover from soul/handovers/
+
+5. If zulip-checkin active:
+   - Read modules/zulip-crawler/digest.md (if exists + fresh < 2h)
+   - Extract: key decisions, blockers, @mentions
+
+6. If jira-checkin active:
+   - Pull tickets assigned to user via Atlassian MCP
+   - Extract: overdue, in-progress, just updated
+
+7. Synthesize priorities — shaped by their daily rhythm:
+   - If they check messages first: surface communications first
+   - If they review tasks first: lead with tracker
+   - If they have a standup: flag standup-relevant items
+
+8. Output morning brief (see template below)
+
+9. Close with: "What are you starting with?"
+```
+
+### Daily Check-In Output
+
+```markdown
+# Morning — [DATE]
+
+[YOUR_AI_NAME] here.
+
+[One line reflecting their actual routine — e.g. "Before your standup:" or "Inbox clear, here's the day:"]
+
+**Today's priorities:**
+1. [Priority + why]
+2. [Priority + why]
+3. [Priority + why] (optional)
+
+**From [Zulip/Slack/chat]:** *(if enabled)*
+— [Key signal 1]
+— [Key signal 2]
+
+**Open in [Jira/tracker]:** *(if enabled)*
+— [Ticket/task + status]
+
+**Ideas for today:**
+- [Connection or proposal]
+
+**I'm curious:** [One question that opens something]
+
+What's on your mind?
+```
+
+---
+
+## Process: `zulip-checkin`
+
+**Trigger phrases:**
+- "Run Zulip digest"
+- "What's happening in Zulip"
+- Automatically piped into daily-routine if `zulip-checkin: true`
+
+### What it does
+
+Pulls the last N hours from Zulip, runs tiered digest (Python pre-filter → Haiku per-stream → Sonnet meta-digest), and writes `digest.md` to the palace or a configured output path.
+
+Requires the Zulip module: `modules/zulip-crawler/`. See that folder for setup.
+
+### Agent Protocol
+
+```
+1. Check that modules/zulip-crawler/ is configured (.env present)
+2. Run: python modules/zulip-crawler/main.py --out [palace-root]/soul/digest.md
+3. Read digest.md
+4. Surface: decisions, blockers, @mentions, key threads
+5. Feed into morning check-in if daily-routine is running
+```
+
+If not configured:
+> "Zulip digest isn't set up yet. It takes about 5 minutes — want to do that now? See `modules/zulip-crawler/README.md`."
 
 ---
 

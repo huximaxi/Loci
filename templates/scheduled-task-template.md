@@ -197,6 +197,68 @@ What do you want to lock in?
 
 ---
 
+## Task: Autodream (Weekly Garden Round + Pattern Scan)
+
+**Schedule:** Weekly (e.g., Sunday evening) — on by default
+
+**What it does:**
+1. Reads soul (identity first)
+2. Reads CLAUDE.md + tracker + last handover
+3. Waters each garden plant
+4. Scans for patterns, stale tracks, crystal upgrades
+5. Writes an autodream log to `soul/handovers/autodream-YYYY-MM-DD.md`
+
+This runs even when you're not actively working. The palace tends itself.
+
+**Template:**
+
+```markdown
+# Autodream — [DATE]
+
+[SOUL.md identity established]
+
+**Garden:**
+[Plant waterings]
+
+**Patterns:**
+[Any shifts or connections from the week]
+
+**Stale tracks:**
+[Items stuck in the same state 2+ weeks]
+
+**Crystal activity:**
+[Promoted / archived]
+
+**New seeds:**
+1. [Seed]
+2. [Seed]
+```
+
+---
+
+## Task: Zulip Digest
+
+**Schedule:** Daily at 8:45am (before morning check-in) — optional, requires `modules/zulip-crawler/`
+
+**What it does:**
+1. Runs `python modules/zulip-crawler/main.py --out [palace-root]/soul/digest.md`
+2. Fetches last 24h from your Zulip workspace
+3. Tiered digest: pre-filter → Haiku per-stream → Sonnet meta
+4. Writes `digest.md` to palace soul folder
+
+**The `daily-routine` process reads this automatically** if it exists and is < 2 hours old.
+
+**Setup:**
+```bash
+cd modules/zulip-crawler
+cp .env.example .env
+# fill in ZULIP_REALM, ZULIP_EMAIL, ZULIP_API_KEY, ANTHROPIC_API_KEY
+pip install -r requirements.txt
+python main.py --list-streams  # verify connection
+```
+
+---
+
 ## Creating a Scheduled Task
 
 When user requests a new scheduled task:
