@@ -1,5 +1,15 @@
 # Loci
 
+```
+┌───────┬───────┬───────┬───────┐
+│       │       │       │       │
+│  │    │  ┌─┐  │  ┌─   │  ───  │
+│  │    │  │ │  │  │    │   │   │
+│  └──  │  └─┘  │  └─   │  ───  │
+│       │       │       │       │
+└───────┴───────┴───────┴───────┘
+```
+
 **A co-intelligence scaffold. Agent-first. Human-friendly.**
 
 *locus (singular) — your place of memory. loci (plural) — the system.*
@@ -107,8 +117,51 @@ loci/
 
 ## Works with
 
-- [Claude](https://claude.ai) — web, desktop (Cowork), or API
-- [Claude Code](https://claude.ai/claude-code) — terminal
+The palace is plain text — markdown files and JSON. Any AI that can read files can run it. Switch engines between sessions, mix tools across accounts, use whichever model fits the task. The memory stays; the agent changes.
+
+**Tested and recommended:**
+- [Claude](https://claude.ai) — web, Cowork desktop, or API
+- [Claude Code](https://claude.ai/claude-code) — terminal (same palace, different surface)
+- Claude across multiple accounts — work and personal share one palace seamlessly; only MCP integrations (Figma, Jira, etc.) differ by account
+
+**Works with any LLM that has file access:**
+- OpenAI GPT-4 / o3 — with file tools or Codex
+- Google Gemini — via Drive or direct file context
+- Mistral, Llama, Qwen — local via Ollama or any file-capable wrapper
+- Any model via API with tool/function calling
+
+**The setup is the same regardless of engine.** Point any AI at this repo, say *"run the setup"*, and it interviews you and writes your palace. The `CLAUDE-master.md` template name is a convention, not a constraint — rename it if you're on a different stack.
+
+---
+
+## Changelog
+
+### v0.4 — April 2026
+- **ASCII logo** — four rooms, one per letter. Letters drawn in the same box-drawing characters as the palace walls (`│ ┌─┐ └─┘ ───`). One visual language throughout.
+- **Engine-agnostic "Works with"** — palace is plain text; any LLM with file access can run it. Works across multiple accounts (work + personal) seamlessly. `CLAUDE-master.md` is a naming convention, not a lock-in.
+- **Changelog** — added to README; covers v0.1 through v0.4.
+
+### v0.3 — April 2026
+- **Naming ceremony** — agent name moved to Block 8 (after garden + daily routine). Names are now shaped by what the agent has learned about the user, not offered cold at the start.
+- **Daily routine** — new onboarding question asks how the user actually starts their day. Stored as a crystal; seeds every morning check-in with real context instead of a generic template.
+- **Autodream** — weekly scheduled palace housekeeping (garden round + pattern scan + stale tracker check). On by default. Runs without you.
+- **Daily routine check-in** — personalised morning brief process. Pulls from Zulip and/or Jira if configured.
+- **Zulip module** — `modules/zulip-crawler/`: Python CLI for tiered Zulip digests (Haiku per-stream → Sonnet meta). Fully configurable via `.env`. Pipes into morning check-in.
+- **Cross-environment portability** — palace is file-based; works identically across Claude Code, Cowork desktop, and web. Documented in onboarding and README.
+
+### v0.2 — March–April 2026
+- **Garden first-class** — garden moved from optional appendix to core feature. Competitive differentiator: no other co-intelligence scaffold has it.
+- **L0–L3 retrieval hierarchy** — context loads in priority layers (soul identity → active state → room context → deep history). Documented in `templates/retrieval-hierarchy.md`.
+- **Persona templates** — named thinking modes with their own soul files and gardens. Personas collaborate via tea sessions.
+- **Crystal expiry** — `valid_until: YYYY-MM-DD` field added to crystal format. Prevents stale facts from calcifying as ground truth.
+- **Scheduled tasks** — `templates/scheduled-task-template.md`: morning briefs, garden rounds, deep synthesis. Dynamic path finding (no hardcoded session paths).
+- **Comparison table** — honest positioning vs MemPalace (benchmarked, vector search) and Karpathy-style (simplest). Different tools for different needs.
+- **Renamed to Loci** — was `palace-starter`. Method of Loci. Classical, 4 letters.
+
+### v0.1 — March 2026
+- Initial release: room structure, context crystals, soul file, session deltas, CLAUDE-master template.
+- 4-room default layout (Great Hall, Dev, Design, Hatchery).
+- Basic handover format. Tracker JSON. Crystal tiers (◆ ◈ ◇).
 
 ---
 
