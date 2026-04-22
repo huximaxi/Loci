@@ -52,6 +52,8 @@ After that, every session starts with `remember: [your AI's name]!` — and you'
 
 **Daily routine check-in** — a personalised morning brief shaped by how you actually start your day. Not a generic status dump.
 
+**Palace update** — delta analysis between your palace and the current Loci feature set. Verbose gap reports when run via agent. Cherry-pick flow for optional features (skill eval, insight decay, morning routines, garden) — one question at a time, nothing forced.
+
 **L0–L3 retrieval** — context loads in priority layers (soul identity → active state → room context → deep history), not all-or-nothing.
 
 **Portable across tools** — the palace is file-based. It works identically in Claude Code (terminal), Cowork (desktop), or the web interface. Optional MCP integrations (Figma, Jira, Zulip) differ by environment — the palace itself doesn't.
@@ -135,6 +137,10 @@ The palace is plain text — markdown files and JSON. Any AI that can read files
 ---
 
 ## Changelog
+
+### v0.5 — April 2026
+- **`palace-update` process** — delta analysis of user's palace vs. current Loci features. Verbose gap reports (why it matters, exact fix, effort estimate). Verbosity modes: full / quick / area-specific / summary.
+- **Cherry-pick onboarding flow** — Block 9 of `AGENT-SETUP.md` expanded with four opt-in questions: morning check-in, autodream, skill eval cadence, insight decay rules. One question at a time. `skip` and `skip all` always valid. Revisitable any time via `palace-update`.
 
 ### v0.4 — April 2026
 - **ASCII logo** — four rooms, one per letter. Letters drawn in the same box-drawing characters as the palace walls (`│ ┌─┐ └─┘ ───`). One visual language throughout.

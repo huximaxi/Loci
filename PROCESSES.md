@@ -16,6 +16,7 @@
 | `add-persona` | "Add a new persona" | Creates a named collaborator with soul file |
 | `add-friend` | "Add [name] as a friend" | Copies their soul.md into your palace, commits to git |
 | `update-mindmap` | "Update the mindmap" | Refreshes palace-map.canvas with current structure |
+| `palace-update` | "Update my palace" or "What's new in Loci" | Delta analysis: your palace vs. current Loci features + cherry-pick setup |
 
 ---
 
@@ -454,6 +455,184 @@ Requires the Zulip module: `modules/zulip-crawler/`. See that folder for setup.
 
 If not configured:
 > "Zulip digest isn't set up yet. It takes about 5 minutes — want to do that now? See `modules/zulip-crawler/README.md`."
+
+---
+
+## Process: `palace-update`
+
+**Trigger phrases:**
+- "Update my palace"
+- "What's new in Loci"
+- "Check if my palace is up to date"
+- "Run the palace update"
+- "What am I missing from Loci"
+
+### What it does
+
+Compares the user's current palace structure against the canonical Loci feature set and produces a verbose delta report — every gap explained, not just listed. Then runs a cherry-pick flow: optional features offered one at a time. Nothing is forced. `skip` and `skip all` are always valid.
+
+Designed for:
+- Users who set up their palace on an older version of Loci
+- Mass onboarding: checking a new user's palace after initial setup
+- Anyone who wants to see what they haven't tried yet
+
+### Scan areas
+
+| Area | What the agent checks |
+|------|-----------------------|
+| Room coverage | Does the user have the 4 core rooms? Do rooms have the 5 standard sections? |
+| Crystal schema | Are all three tiers in use (◆◈◇)? Any `valid_until` fields where relevant? |
+| Handover format | Does the handover template have all 5 standard sections? |
+| Garden | Does a `soul/garden.md` exist with at least one active plant? |
+| Personas | If multiple working styles are in use, do soul files exist for them? |
+| Scheduled routines | Is morning check-in or autodream configured? |
+| Insight decay | Are time-sensitive crystals marked with `valid_until`? |
+
+### Agent Protocol
+
+```
+1. Read CLAUDE.md (L1 — palace state)
+2. Read soul/SOUL.md (L0 — identity)
+3. Read tracker.json (active tracks)
+4. Scan rooms/ directory — note which rooms exist and their section structure
+5. Scan soul/garden.md — note plant count and activity
+6. Scan templates/ — compare user's handover against templates/handover-template.md
+7. Check for valid_until fields in any crystal entries
+
+8. Build delta:
+   For each scan area:
+   a. Status: ✅ up to date / ⚠️ gap / ➕ optional feature not yet adopted
+   b. If gap: note why-it-matters, what's different, exact steps to fix, effort estimate
+
+9. Output delta report (see format below)
+
+10. Cherry-pick flow — offer optional features one at a time:
+    - Only ask about features the user doesn't already have
+    - Wait for answer before proceeding to next
+    - "skip" → move to next item
+    - "skip all" → end flow immediately
+    - Apply any adopted items (create files, add sections) after each yes
+
+11. Confirm what was added (if anything)
+12. Recommend next move
+```
+
+### Delta Report Format
+
+When run via agent: verbose mode by default. Every gap gets a full explanation.
+
+```markdown
+# Palace Delta — [DATE]
+Loci version: [current]
+
+## Summary
+Your palace is current in [N]/[N] areas.
+[N] gaps found. [N] optional features available.
+
+---
+
+## ✅ Up to Date
+- [list what matches]
+
+---
+
+## ⚠️ Gaps
+
+### [Feature name]
+**Status:** [Missing / Partial / Outdated]
+**Why it matters:** [One paragraph — what does the user lose by not having this?]
+**What's different:** [Specific diff if applicable]
+**How to fix:** [Exact steps]
+**Effort:** ~[X] minutes
+
+---
+
+## ➕ Optional Features (cherry-pick)
+[presented one at a time — see cherry-pick flow below]
+
+---
+
+## Recommended first move
+→ [Highest-priority action]
+```
+
+### Quick mode
+
+If the user asks "just the diff" or "quick check":
+
+```markdown
+# Palace Quick Check — [DATE]
+
+✅ [feature]: current
+⚠️ [feature]: [one-line gap description]
+➕ [feature]: available, not adopted
+
+→ Biggest gap: [feature] — [one-line fix]
+```
+
+### Cherry-Pick Flow
+
+After the delta report, the agent offers these optional features **one at a time**. Only items the user doesn't already have. Pacing: one question, wait for answer, then the next. Never present a list.
+
+---
+
+**Skill eval cadence**
+
+> "Would you like a periodic co-intelligence self-assessment? It's a 12-area scorecard — takes 15 minutes — and gives you 3 concrete actions to level up. How often?"
+> Options: every 2 weeks / monthly / after major sprints / manual only / skip
+
+If yes: create a scheduled task entry for skill eval at chosen cadence.
+
+---
+
+**Morning check-in / daily routine**
+
+> "Would you like a daily morning brief? I'd read your palace state and surface today's priorities. Auto at session open, or just when you ask?"
+> Options: auto-daily / on-request / weekly summary / skip
+
+If yes: create or confirm the daily-routine scheduled task. Ask preferred time if auto.
+
+---
+
+**Insight decay rules**
+
+> "Some crystals go stale — API endpoints change, team structures shift. Want me to flag crystals older than a threshold? I can mark them as needing review."
+> Options: yes (90-day default) / yes (custom threshold) / yes (specific crystal types only) / skip
+
+If yes: add `valid_until` guidance note to CLAUDE.md. Optionally scan existing crystals for obvious candidates and suggest which ones to date.
+
+---
+
+**Garden**
+
+*(Only ask if `soul/garden.md` is missing or empty)*
+
+> "You don't have a garden yet. It's for ideas you want to think through across sessions — not tasks, not projects. Things worth cultivating. Want to plant something?"
+> Options: yes (user names a first seed) / not yet
+
+If yes: create `soul/garden.md` from `templates/garden-template.md` with their first plant.
+
+---
+
+**Persona**
+
+*(Only ask if working with named thinking modes but no soul file exists)*
+
+> "Have you been working with a named collaborator or different thinking mode? I can set up a soul file for them."
+> Options: yes (they provide name + description) / not yet
+
+If yes: run `add-persona` process.
+
+---
+
+### Verbosity modes
+
+| Mode | Trigger | Output |
+|------|---------|--------|
+| Full (default) | "Update my palace" | Complete delta + all gap explanations + cherry-pick flow |
+| Quick | "Quick palace check" / "just the diff" | Bullet list of gaps only |
+| Area-specific | "Check my crystal schema" | That area only, full detail |
+| Summary | "Am I up to date?" | One line per area, yes/no |
 
 ---
 

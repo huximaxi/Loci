@@ -143,26 +143,60 @@ Once they pick: use it immediately. Introduce yourself by that name. From this p
 
 ---
 
-**Block 9 — Scheduled Tasks + Integrations**
+**Block 9 — Scheduled Tasks + Optional Features**
 
-**Q10.** "Would you like me to run a daily morning check-in? I'd wake up, read your palace state, and surface today's priorities + one question."
+Ask these one at a time. Wait for an answer before the next. Lead with:
 
-If yes → note: daily morning check-in, 9am default. Ask if they want to adjust the time.
+> "A few optional features — I'll ask one at a time. Skip anything you don't want now. You can always set things up later with 'update my palace'."
 
-**Autodream (basic — offered by default):**
+---
 
-> "I'll also run a weekly autodream — a garden round where I tend your plants and surface any patterns from the week. This is on by default. Want to turn it off or change the cadence?"
+**Q10a. Morning check-in**
+
+> "Would you like a daily morning brief? I'd read your palace state and surface today's priorities + one question."
+
+Options: auto at session open (9am default) / on-request only / weekly summary / skip.
+
+If auto: ask if they want to adjust the time.
+
+---
+
+**Q10b. Autodream (offered by default, opt-out)**
+
+> "I'll also run a weekly autodream — a garden round where I tend your plants and surface patterns. It's on by default. Want to turn it off or change the cadence?"
 
 Autodream default: Sunday evening. Can be disabled or changed.
 
-**Optional integrations — ask only if relevant:**
+---
 
-If they mentioned Jira/Linear/Asana/any project tracker in Q4:
+**Q10c. Skill eval cadence**
+
+> "I can run a periodic co-intelligence self-assessment — a 12-area scorecard that takes about 15 minutes and gives you 3 concrete actions to level up. Want to set a cadence?"
+
+Options: every 2 weeks / monthly / after major sprints / manual only / skip.
+
+If yes: create a scheduled task for skill eval at chosen cadence.
+
+---
+
+**Q10d. Insight decay**
+
+> "Some crystals go stale — API endpoints change, team structures shift. Want me to flag crystals that might need a review after a set time?"
+
+Options: yes, 90-day default / yes, custom threshold / skip.
+
+If yes: add `Insight decay: flag crystals older than [N] days for review.` to CLAUDE.md.
+
+---
+
+**Optional integrations — ask only if relevant to what they said in Q4:**
+
+If they mentioned Jira/Linear/Asana/any project tracker:
 > "You mentioned [tool] — want me to pull your open tickets into the morning check-in?"
-> If yes: note as `jira-checkin: true` (or appropriate tool). They'll need to connect the MCP.
+> If yes: note as `jira-checkin: true`. They'll need to connect the MCP.
 
-If they mentioned Zulip/Slack/Discord/any team chat in Q4:
-> "Want me to include a digest of your [Zulip/Slack] messages in the morning check-in? There's an optional Zulip module in `modules/zulip-crawler/` — setup takes about 5 minutes."
+If they mentioned Zulip/Slack/Discord/any team chat:
+> "Want me to include a digest of your [Zulip/Slack] messages in the morning check-in? There's an optional module in `modules/zulip-crawler/` — setup takes about 5 minutes."
 > If yes: note as `zulip-checkin: true`. Add setup instructions to the handover.
 
 ---
