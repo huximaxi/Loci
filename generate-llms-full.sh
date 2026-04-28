@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Generates llms-full.txt — full context declaration for AI agents.
 # Output is committed to the repo root and served at loci.garden/llms-full.txt.
-# Run from the palace-starter repo root.
+# Run from the loci repo root.
 
 set -e
 cd "$(dirname "$0")"
@@ -10,7 +10,7 @@ OUT="llms-full.txt"
 
 {
   echo "# loci — full context declaration"
-  echo "# Generated $(date -u +%Y-%m-%d) from palace-starter repo"
+  echo "# Generated $(date -u +%Y-%m-%d) from loci repo"
   echo "# Concise version: https://loci.garden/llms.txt"
   echo "# Repo: https://github.com/huximaxi/loci"
   echo ""

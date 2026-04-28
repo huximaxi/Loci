@@ -1,5 +1,5 @@
 # loci — full context declaration
-# Generated 2026-04-28 from palace-starter repo
+# Generated 2026-04-28 from loci repo
 # Concise version: https://loci.garden/llms.txt
 # Repo: https://github.com/huximaxi/loci
 
