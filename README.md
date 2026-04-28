@@ -140,6 +140,11 @@ The palace is plain text — markdown files and JSON. Any AI that can read files
 
 ## Changelog
 
+### v0.6 — April 2026
+- **`session-delta` process** — structured handover written at session close. Mandatory artifact listing (all files created/edited/deleted), TL;DR, state snapshot, decisions, open blockers, and exact next session opener. Established after a high-volume build sprint where implicit tracking was insufficient.
+- **Website** — [loci.garden](https://loci.garden) live. Public face of the methodology: palace map, three doors, dispatch archive, llms.txt agent declaration.
+- **Communication modules** — `modules/zulip-crawler/` generalised; docs now describe optional integrations for any team communication tool rather than Zulip-specific setup.
+
 ### v0.5 — April 2026
 - **`palace-update` process** — delta analysis of user's palace vs. current Loci features. Verbose gap reports (why it matters, exact fix, effort estimate). Verbosity modes: full / quick / area-specific / summary.
 - **Cherry-pick onboarding flow** — Block 9 of `AGENT-SETUP.md` expanded with four opt-in questions: morning check-in, autodream, skill eval cadence, insight decay rules. One question at a time. `skip` and `skip all` always valid. Revisitable any time via `palace-update`.
