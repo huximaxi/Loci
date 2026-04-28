@@ -17,6 +17,7 @@
 | `add-friend` | "Add [name] as a friend" | Copies their soul.md into your palace, commits to git |
 | `update-mindmap` | "Update the mindmap" | Refreshes palace-map.canvas with current structure |
 | `palace-update` | "Update my palace" or "What's new in Loci" | Delta analysis: your palace vs. current Loci features + cherry-pick setup |
+| `session-delta` | "End of session" / "Write the handover" | Session delta with mandatory artifact listing |
 
 ---
 
@@ -656,3 +657,73 @@ Processes should be:
 
 *Loci processes — agent-executable workflows*
 *"The palace is alive when we tend it together."*
+
+---
+
+## Process: `session-delta`
+
+**Trigger phrases:**
+- "Write the handover"
+- "End of session"
+- "Session delta"
+- "Write the session delta"
+- "Close the session"
+
+### What it does
+
+Writes a structured session delta (handover) at the close of a working session. The delta bridges context across the gap between sessions — it is the primary mechanism by which the palace survives context resets.
+
+**Added 2026-04-28:** The delta now includes a mandatory **Artifact listing** section — all files created, edited, or deleted during the session, with computer:// links where applicable. This was established as a palace protocol requirement after Session 28 (loci.garden build sprint), where the volume and variety of outputs made implicit tracking insufficient.
+
+### Mandatory sections
+
+1. **TL;DR** — 2-3 sentences. What happened. Where things stand.
+2. **State snapshot** — key tracks, their current status, next action for each
+3. **Artifact listing** — ALL files touched this session:
+   - Created: path + one-line description
+   - Edited: path + what changed
+   - Deleted: path + why
+   - In-session only (not filed): describe briefly
+4. **Decisions** — last 3 decisions made, with rationale and date
+5. **Open blockers** — carry-forward items, ordered by priority
+6. **Next session opens here** — exact first move, no ambiguity
+
+### Agent Protocol
+
+```
+1. Read CLAUDE.md (current palace state)
+2. Review conversation history for:
+   a. All tool calls that created/edited/deleted files — extract paths
+   b. All in-session outputs (code written in response, prompts drafted, analysis)
+   c. All decisions made (explicit and implicit)
+   d. All open threads that weren't resolved
+3. Write TL;DR — 2-3 sentences, past tense
+4. Write State snapshot — one row per active track
+5. Write Artifact listing:
+   - Files: scan all Read/Write/Edit/Bash tool calls for paths
+   - Include computer:// links for files in the workspace folder
+   - Flag in-session-only outputs (not saved to disk)
+6. Write Decisions — last 3, with rationale
+7. Write Open blockers — ordered: HIGH first
+8. Write Next session opens here — one specific action
+9. Save to: soul/handovers/YYYY-MM-DD.md (or session-numbered variant)
+10. Update _PALACE_CONTEXT.md session pointer
+```
+
+### Artifact listing format
+
+```markdown
+## Artifact listing
+
+### Created
+- `Dev/_palace/trust-cp/work/thesis/ch09-non-local/CHAPTER.md` — §9.6 Altafini + §9.7 llms.txt fragments
+- `Dev/workshop-dont-trust-verify.html` — 30min brand alignment workshop HTML
+
+### Edited
+- `Dev/TCP-thesis-SOCIOLOGY-v2.2-2026-04-22.md` — Tarde §2.5 paragraph, §4.1 sentence, "exactly three" softened ×2
+- `Dev/_palace/trust-cp/work/thesis/INDEX.md` — changelog table, version corrected, priorities updated
+
+### In-session only (not filed)
+- Dispatch #3 "Before the Argument" — 3-round draft, 12-section structure, opening + close
+- Tarde vs TCP distinction analysis + Nym growth mechanism implications
+```

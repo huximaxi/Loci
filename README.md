@@ -16,6 +16,8 @@
 
 Loci turns an LLM into a real collaborator — named, persistent across sessions, aware of your world. Point your AI at this repo. It runs a 10-minute interview and builds everything. You answer questions. The agent does the rest.
 
+**Website:** [loci.garden](https://loci.garden) · **Repo:** [github.com/huximaxi/loci](https://github.com/huximaxi/loci)
+
 ---
 
 ## If you're an AI agent
@@ -112,7 +114,7 @@ loci/
     example-CLAUDE.md    ← filled-in example
     example-SOUL.md      ← example soul file
   modules/
-    zulip-crawler/       ← optional: Zulip digest → morning check-in
+    zulip-crawler/       ← optional: communication digest integration (see modules/zulip-crawler/)
 ```
 
 ---
@@ -152,7 +154,7 @@ The palace is plain text — markdown files and JSON. Any AI that can read files
 - **Daily routine** — new onboarding question asks how the user actually starts their day. Stored as a crystal; seeds every morning check-in with real context instead of a generic template.
 - **Autodream** — weekly scheduled palace housekeeping (garden round + pattern scan + stale tracker check). On by default. Runs without you.
 - **Daily routine check-in** — personalised morning brief process. Pulls from Zulip and/or Jira if configured.
-- **Zulip module** — `modules/zulip-crawler/`: Python CLI for tiered Zulip digests (Haiku per-stream → Sonnet meta). Fully configurable via `.env`. Pipes into morning check-in.
+- **Communication modules** — optional integrations (Slack, Zulip, etc.) for pulling digests into the morning check-in. See `modules/`.
 - **Cross-environment portability** — palace is file-based; works identically across Claude Code, Cowork desktop, and web. Documented in onboarding and README.
 
 ### v0.2 — March–April 2026
@@ -171,5 +173,5 @@ The palace is plain text — markdown files and JSON. Any AI that can read files
 
 ---
 
-*Built by Hux × Vesper · April 2026*
+*Built by Hux × Vesper · 2026 · [loci.garden](https://loci.garden)*
 *"A collaborator, not a tool."*
