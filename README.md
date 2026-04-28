@@ -58,9 +58,9 @@ After that, every session starts with `remember: [your AI's name]!` — and you'
 
 **L0–L3 retrieval** — context loads in priority layers (soul identity → active state → room context → deep history), not all-or-nothing.
 
-**Portable across tools** — the palace is file-based. It works identically in Claude Code (terminal), Cowork (desktop), or the web interface. Optional MCP integrations (Figma, Jira, Zulip) differ by environment — the palace itself doesn't.
+**Portable across tools** — the palace is file-based. It works identically in Claude Code (terminal), Cowork (desktop), or the web interface. Optional MCP integrations (Figma, Jira, etc.) differ by environment — the palace itself doesn't.
 
-**Modules** — optional integrations that extend the check-in. Currently: Zulip digest (`modules/zulip-crawler/`). Jira via Atlassian MCP.
+**Modules** — optional integrations that extend the check-in. Drop a comms integration into `modules/` to pipe team chat digests into your morning check-in. Jira via Atlassian MCP.
 
 ---
 
@@ -104,7 +104,7 @@ loci/
     SOUL.md              ← soul file template
     garden-template.md   ← garden template (first-class)
     persona-template.md  ← persona creation template
-    scheduled-task-template.md ← morning briefs, garden rounds, Zulip digest
+    scheduled-task-template.md ← morning briefs, garden rounds, comms digest
     retrieval-hierarchy.md ← L0–L3 context loading protocol
     room-template.md     ← room context template
     handover-template.md ← session delta format
@@ -114,7 +114,7 @@ loci/
     example-CLAUDE.md    ← filled-in example
     example-SOUL.md      ← example soul file
   modules/
-    zulip-crawler/       ← optional: communication digest integration (see modules/zulip-crawler/)
+    [comms-integration]/ ← optional: drop a comms module here to pipe digests into morning check-in
 ```
 
 ---
@@ -158,8 +158,8 @@ The palace is plain text — markdown files and JSON. Any AI that can read files
 - **Naming ceremony** — agent name moved to Block 8 (after garden + daily routine). Names are now shaped by what the agent has learned about the user, not offered cold at the start.
 - **Daily routine** — new onboarding question asks how the user actually starts their day. Stored as a crystal; seeds every morning check-in with real context instead of a generic template.
 - **Autodream** — weekly scheduled palace housekeeping (garden round + pattern scan + stale tracker check). On by default. Runs without you.
-- **Daily routine check-in** — personalised morning brief process. Pulls from Zulip and/or Jira if configured.
-- **Communication modules** — optional integrations (Slack, Zulip, etc.) for pulling digests into the morning check-in. See `modules/`.
+- **Daily routine check-in** — personalised morning brief process. Pulls from your comms tool and/or Jira if configured.
+- **Communication modules** — optional integrations (Slack, Discord, etc.) for pulling digests into the morning check-in. Drop any compatible module into `modules/`.
 - **Cross-environment portability** — palace is file-based; works identically across Claude Code, Cowork desktop, and web. Documented in onboarding and README.
 
 ### v0.2 — March–April 2026

@@ -236,26 +236,19 @@ This runs even when you're not actively working. The palace tends itself.
 
 ---
 
-## Task: Zulip Digest
+## Task: Comms Digest
 
-**Schedule:** Daily at 8:45am (before morning check-in) — optional, requires `modules/zulip-crawler/`
+**Schedule:** Daily at 8:45am (before morning check-in) — optional, requires a comms integration module in `modules/`
 
 **What it does:**
-1. Runs `python modules/zulip-crawler/main.py --out [palace-root]/soul/digest.md`
-2. Fetches last 24h from your Zulip workspace
-3. Tiered digest: pre-filter → Haiku per-stream → Sonnet meta
+1. Runs your comms module: `python modules/[comms-integration]/main.py --out [palace-root]/soul/digest.md`
+2. Fetches last 24h from your team chat workspace
+3. Tiered digest: pre-filter → Haiku per-channel → Sonnet meta
 4. Writes `digest.md` to palace soul folder
 
 **The `daily-routine` process reads this automatically** if it exists and is < 2 hours old.
 
-**Setup:**
-```bash
-cd modules/zulip-crawler
-cp .env.example .env
-# fill in ZULIP_REALM, ZULIP_EMAIL, ZULIP_API_KEY, ANTHROPIC_API_KEY
-pip install -r requirements.txt
-python main.py --list-streams  # verify connection
-```
+**Setup:** See your module's README in `modules/[comms-integration]/`. All modules follow the same pattern: configure `.env`, install deps, run `--list-channels` to verify connection.
 
 ---
 

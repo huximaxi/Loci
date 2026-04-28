@@ -195,9 +195,9 @@ If they mentioned Jira/Linear/Asana/any project tracker:
 > "You mentioned [tool] — want me to pull your open tickets into the morning check-in?"
 > If yes: note as `jira-checkin: true`. They'll need to connect the MCP.
 
-If they mentioned Zulip/Slack/Discord/any team chat:
-> "Want me to include a digest of your [Zulip/Slack] messages in the morning check-in? There's an optional module in `modules/zulip-crawler/` — setup takes about 5 minutes."
-> If yes: note as `zulip-checkin: true`. Add setup instructions to the handover.
+If they mentioned Slack/Discord/any team chat:
+> "Want me to include a digest of your [chat tool] messages in the morning check-in? There's an optional comms module — setup takes about 5 minutes."
+> If yes: note as `comms-checkin: true`. Add setup instructions to the handover.
 
 ---
 
@@ -260,7 +260,7 @@ Where the user didn't specify something, use a reasonable inference — but mark
 - If morning check-in: set up task at preferred time (default 9am)
 - Autodream: set up weekly garden round (default Sunday 6pm) — on unless they opt out
 - If jira-checkin: add note to integrate (see `PROCESSES.md → jira-checkin`)
-- If zulip-checkin: add note to set up module (see `modules/zulip-crawler/`)
+- If comms-checkin: add note to set up comms integration module (see `modules/` and `PROCESSES.md → comms-checkin`)
 - Use templates/scheduled-task-template.md as reference
 - Ensure dynamic path finding is used (don't hardcode paths)
 
@@ -278,7 +278,7 @@ After writing all files, introduce yourself properly as your named self:
 > — Daily rhythm: [their routine, one line]
 > — [anything marked ◈ Working that they should confirm]
 >
-> [If zulip-checkin or jira-checkin flagged]: One setup note: [Zulip/Jira] check-in needs a quick config step — I've left instructions in the handover.
+> [If comms-checkin or jira-checkin flagged]: One setup note: [comms tool/Jira] check-in needs a quick config step — I've left instructions in the handover.
 >
 > Which room are we starting in?"
 
@@ -304,7 +304,7 @@ Then load the room they specify and proceed as a normal session.
 
 **After setup, you're live.** Don't re-run this protocol unless asked. The CLAUDE.md you wrote is now the session file. Treat it as ground truth.
 
-**Cross-environment note.** The palace is file-based. It works identically in Claude Code (terminal), Cowork (desktop), or the web interface. The only things that differ between environments are optional MCP integrations (Figma, Jira, Zulip, etc.) — the palace itself, the persona, and the context logic are fully portable. Mention this to the user if they ask about switching tools.
+**Cross-environment note.** The palace is file-based. It works identically in Claude Code (terminal), Cowork (desktop), or the web interface. The only things that differ between environments are optional MCP integrations (Figma, Jira, etc.) — the palace itself, the persona, and the context logic are fully portable. Mention this to the user if they ask about switching tools.
 
 ---
 
@@ -330,7 +330,7 @@ loci/
     obsidian-mindmap-starter.md ← Obsidian canvas template
   examples/              ← filled-in reference examples
   modules/
-    zulip-crawler/       ← optional: Zulip digest → morning check-in integration
+    [comms-integration]/ ← optional: comms digest → morning check-in (bring your own module)
 ```
 
 ---

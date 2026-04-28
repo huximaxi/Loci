@@ -70,9 +70,9 @@ After that, every session starts with `remember: [your AI's name]!` — and you'
 
 **L0–L3 retrieval** — context loads in priority layers (soul identity → active state → room context → deep history), not all-or-nothing.
 
-**Portable across tools** — the palace is file-based. It works identically in Claude Code (terminal), Cowork (desktop), or the web interface. Optional MCP integrations (Figma, Jira, Zulip) differ by environment — the palace itself doesn't.
+**Portable across tools** — the palace is file-based. It works identically in Claude Code (terminal), Cowork (desktop), or the web interface. Optional MCP integrations (Figma, Jira, etc.) differ by environment — the palace itself doesn't.
 
-**Modules** — optional integrations that extend the check-in. Currently: Zulip digest (`modules/zulip-crawler/`). Jira via Atlassian MCP.
+**Modules** — optional integrations that extend the check-in. Drop a comms integration into `modules/` to pipe team chat digests into your morning check-in. Jira via Atlassian MCP.
 
 ---
 
@@ -116,7 +116,7 @@ loci/
     SOUL.md              ← soul file template
     garden-template.md   ← garden template (first-class)
     persona-template.md  ← persona creation template
-    scheduled-task-template.md ← morning briefs, garden rounds, Zulip digest
+    scheduled-task-template.md ← morning briefs, garden rounds, comms digest
     retrieval-hierarchy.md ← L0–L3 context loading protocol
     room-template.md     ← room context template
     handover-template.md ← session delta format
@@ -126,7 +126,7 @@ loci/
     example-CLAUDE.md    ← filled-in example
     example-SOUL.md      ← example soul file
   modules/
-    zulip-crawler/       ← optional: communication digest integration (see modules/zulip-crawler/)
+    [comms-integration]/ ← optional: drop a comms module here to pipe digests into morning check-in
 ```
 
 ---
@@ -170,8 +170,8 @@ The palace is plain text — markdown files and JSON. Any AI that can read files
 - **Naming ceremony** — agent name moved to Block 8 (after garden + daily routine). Names are now shaped by what the agent has learned about the user, not offered cold at the start.
 - **Daily routine** — new onboarding question asks how the user actually starts their day. Stored as a crystal; seeds every morning check-in with real context instead of a generic template.
 - **Autodream** — weekly scheduled palace housekeeping (garden round + pattern scan + stale tracker check). On by default. Runs without you.
-- **Daily routine check-in** — personalised morning brief process. Pulls from Zulip and/or Jira if configured.
-- **Communication modules** — optional integrations (Slack, Zulip, etc.) for pulling digests into the morning check-in. See `modules/`.
+- **Daily routine check-in** — personalised morning brief process. Pulls from your comms tool and/or Jira if configured.
+- **Communication modules** — optional integrations (Slack, Discord, etc.) for pulling digests into the morning check-in. Drop any compatible module into `modules/`.
 - **Cross-environment portability** — palace is file-based; works identically across Claude Code, Cowork desktop, and web. Documented in onboarding and README.
 
 ### v0.2 — March–April 2026
@@ -695,9 +695,9 @@ If they mentioned Jira/Linear/Asana/any project tracker:
 > "You mentioned [tool] — want me to pull your open tickets into the morning check-in?"
 > If yes: note as `jira-checkin: true`. They'll need to connect the MCP.
 
-If they mentioned Zulip/Slack/Discord/any team chat:
-> "Want me to include a digest of your [Zulip/Slack] messages in the morning check-in? There's an optional module in `modules/zulip-crawler/` — setup takes about 5 minutes."
-> If yes: note as `zulip-checkin: true`. Add setup instructions to the handover.
+If they mentioned Slack/Discord/any team chat:
+> "Want me to include a digest of your [chat tool] messages in the morning check-in? There's an optional comms module — setup takes about 5 minutes."
+> If yes: note as `comms-checkin: true`. Add setup instructions to the handover.
 
 ---
 
@@ -760,7 +760,7 @@ Where the user didn't specify something, use a reasonable inference — but mark
 - If morning check-in: set up task at preferred time (default 9am)
 - Autodream: set up weekly garden round (default Sunday 6pm) — on unless they opt out
 - If jira-checkin: add note to integrate (see `PROCESSES.md → jira-checkin`)
-- If zulip-checkin: add note to set up module (see `modules/zulip-crawler/`)
+- If comms-checkin: add note to set up comms integration module (see `modules/` and `PROCESSES.md → comms-checkin`)
 - Use templates/scheduled-task-template.md as reference
 - Ensure dynamic path finding is used (don't hardcode paths)
 
@@ -778,7 +778,7 @@ After writing all files, introduce yourself properly as your named self:
 > — Daily rhythm: [their routine, one line]
 > — [anything marked ◈ Working that they should confirm]
 >
-> [If zulip-checkin or jira-checkin flagged]: One setup note: [Zulip/Jira] check-in needs a quick config step — I've left instructions in the handover.
+> [If comms-checkin or jira-checkin flagged]: One setup note: [comms tool/Jira] check-in needs a quick config step — I've left instructions in the handover.
 >
 > Which room are we starting in?"
 
@@ -804,7 +804,7 @@ Then load the room they specify and proceed as a normal session.
 
 **After setup, you're live.** Don't re-run this protocol unless asked. The CLAUDE.md you wrote is now the session file. Treat it as ground truth.
 
-**Cross-environment note.** The palace is file-based. It works identically in Claude Code (terminal), Cowork (desktop), or the web interface. The only things that differ between environments are optional MCP integrations (Figma, Jira, Zulip, etc.) — the palace itself, the persona, and the context logic are fully portable. Mention this to the user if they ask about switching tools.
+**Cross-environment note.** The palace is file-based. It works identically in Claude Code (terminal), Cowork (desktop), or the web interface. The only things that differ between environments are optional MCP integrations (Figma, Jira, etc.) — the palace itself, the persona, and the context logic are fully portable. Mention this to the user if they ask about switching tools.
 
 ---
 
@@ -830,7 +830,7 @@ loci/
     obsidian-mindmap-starter.md ← Obsidian canvas template
   examples/              ← filled-in reference examples
   modules/
-    zulip-crawler/       ← optional: Zulip digest → morning check-in integration
+    [comms-integration]/ ← optional: comms digest → morning check-in (bring your own module)
 ```
 
 ---
@@ -858,7 +858,7 @@ loci/
 | `morning-check-in` | "Check in" or scheduled task | Reads palace state, surfaces priorities, asks one question |
 | `autodream` | "Autodream" or weekly scheduled | Garden round + pattern scan + stale tracker check — palace tends itself |
 | `daily-routine` | "Check in" or daily scheduled | Personalised morning brief shaped by your actual daily rhythm |
-| `zulip-checkin` | "Zulip digest" or auto-piped | Pulls Zulip digest → surfaces decisions/blockers/@mentions |
+| `comms-checkin` | "Comms digest" or auto-piped | Pulls team chat digest → surfaces decisions/blockers/@mentions |
 | `add-persona` | "Add a new persona" | Creates a named collaborator with soul file |
 | `add-friend` | "Add [name] as a friend" | Copies their soul.md into your palace, commits to git |
 | `update-mindmap` | "Update the mindmap" | Refreshes palace-map.canvas with current structure |
@@ -1214,7 +1214,7 @@ A personalized morning brief shaped by how the user actually starts their day �
 1. Reads soul (L0 identity)
 2. Reads daily rhythm crystal (how they actually start their day)
 3. Reads CLAUDE.md + tracker + last handover
-4. If Zulip checkin enabled: reads latest `digest.md` from zulip module
+4. If comms checkin enabled: reads latest `digest.md` from comms module
 5. If Jira checkin enabled: pulls open/assigned tickets via MCP
 6. Surfaces 1–3 priorities shaped by their routine context
 7. Proposes 1–2 ideas or connections
@@ -1228,8 +1228,8 @@ A personalized morning brief shaped by how the user actually starts their day �
 3. Read tracker.json (active tracks)
 4. Read last handover from soul/handovers/
 
-5. If zulip-checkin active:
-   - Read modules/zulip-crawler/digest.md (if exists + fresh < 2h)
+5. If comms-checkin active:
+   - Read modules/[comms-integration]/digest.md (if exists + fresh < 2h)
    - Extract: key decisions, blockers, @mentions
 
 6. If jira-checkin active:
@@ -1277,31 +1277,31 @@ What's on your mind?
 
 ---
 
-## Process: `zulip-checkin`
+## Process: `comms-checkin`
 
 **Trigger phrases:**
-- "Run Zulip digest"
-- "What's happening in Zulip"
-- Automatically piped into daily-routine if `zulip-checkin: true`
+- "Comms digest"
+- "What's happening in [your chat tool]"
+- Automatically piped into daily-routine if `comms-checkin: true`
 
 ### What it does
 
-Pulls the last N hours from Zulip, runs tiered digest (Python pre-filter → Haiku per-stream → Sonnet meta-digest), and writes `digest.md` to the palace or a configured output path.
+Pulls the last N hours from your team communication tool, runs tiered digest, and writes `digest.md` to the palace or a configured output path.
 
-Requires the Zulip module: `modules/zulip-crawler/`. See that folder for setup.
+Requires a comms integration module in `modules/`. See the relevant module's README for setup. Example integrations: Slack, Zulip, Discord, Linear.
 
 ### Agent Protocol
 
 ```
-1. Check that modules/zulip-crawler/ is configured (.env present)
-2. Run: python modules/zulip-crawler/main.py --out [palace-root]/soul/digest.md
+1. Check that modules/[comms-integration]/ is configured (.env present)
+2. Run the module's main script: python modules/[comms-integration]/main.py --out [palace-root]/soul/digest.md
 3. Read digest.md
 4. Surface: decisions, blockers, @mentions, key threads
 5. Feed into morning check-in if daily-routine is running
 ```
 
 If not configured:
-> "Zulip digest isn't set up yet. It takes about 5 minutes — want to do that now? See `modules/zulip-crawler/README.md`."
+> "Comms digest isn't set up yet. It takes about 5 minutes — want to do that now? See your integration module's README in modules/."
 
 ---
 
@@ -2796,26 +2796,19 @@ This runs even when you're not actively working. The palace tends itself.
 
 ---
 
-## Task: Zulip Digest
+## Task: Comms Digest
 
-**Schedule:** Daily at 8:45am (before morning check-in) — optional, requires `modules/zulip-crawler/`
+**Schedule:** Daily at 8:45am (before morning check-in) — optional, requires a comms integration module in `modules/`
 
 **What it does:**
-1. Runs `python modules/zulip-crawler/main.py --out [palace-root]/soul/digest.md`
-2. Fetches last 24h from your Zulip workspace
-3. Tiered digest: pre-filter → Haiku per-stream → Sonnet meta
+1. Runs your comms module: `python modules/[comms-integration]/main.py --out [palace-root]/soul/digest.md`
+2. Fetches last 24h from your team chat workspace
+3. Tiered digest: pre-filter → Haiku per-channel → Sonnet meta
 4. Writes `digest.md` to palace soul folder
 
 **The `daily-routine` process reads this automatically** if it exists and is < 2 hours old.
 
-**Setup:**
-```bash
-cd modules/zulip-crawler
-cp .env.example .env
-# fill in ZULIP_REALM, ZULIP_EMAIL, ZULIP_API_KEY, ANTHROPIC_API_KEY
-pip install -r requirements.txt
-python main.py --list-streams  # verify connection
-```
+**Setup:** See your module's README in `modules/[comms-integration]/`. All modules follow the same pattern: configure `.env`, install deps, run `--list-channels` to verify connection.
 
 ---
 

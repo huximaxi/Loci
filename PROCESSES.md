@@ -12,7 +12,7 @@
 | `morning-check-in` | "Check in" or scheduled task | Reads palace state, surfaces priorities, asks one question |
 | `autodream` | "Autodream" or weekly scheduled | Garden round + pattern scan + stale tracker check — palace tends itself |
 | `daily-routine` | "Check in" or daily scheduled | Personalised morning brief shaped by your actual daily rhythm |
-| `zulip-checkin` | "Zulip digest" or auto-piped | Pulls Zulip digest → surfaces decisions/blockers/@mentions |
+| `comms-checkin` | "Comms digest" or auto-piped | Pulls team chat digest → surfaces decisions/blockers/@mentions |
 | `add-persona` | "Add a new persona" | Creates a named collaborator with soul file |
 | `add-friend` | "Add [name] as a friend" | Copies their soul.md into your palace, commits to git |
 | `update-mindmap` | "Update the mindmap" | Refreshes palace-map.canvas with current structure |
@@ -368,7 +368,7 @@ A personalized morning brief shaped by how the user actually starts their day �
 1. Reads soul (L0 identity)
 2. Reads daily rhythm crystal (how they actually start their day)
 3. Reads CLAUDE.md + tracker + last handover
-4. If Zulip checkin enabled: reads latest `digest.md` from zulip module
+4. If comms checkin enabled: reads latest `digest.md` from comms module
 5. If Jira checkin enabled: pulls open/assigned tickets via MCP
 6. Surfaces 1–3 priorities shaped by their routine context
 7. Proposes 1–2 ideas or connections
@@ -382,8 +382,8 @@ A personalized morning brief shaped by how the user actually starts their day �
 3. Read tracker.json (active tracks)
 4. Read last handover from soul/handovers/
 
-5. If zulip-checkin active:
-   - Read modules/zulip-crawler/digest.md (if exists + fresh < 2h)
+5. If comms-checkin active:
+   - Read modules/[comms-integration]/digest.md (if exists + fresh < 2h)
    - Extract: key decisions, blockers, @mentions
 
 6. If jira-checkin active:
@@ -431,31 +431,31 @@ What's on your mind?
 
 ---
 
-## Process: `zulip-checkin`
+## Process: `comms-checkin`
 
 **Trigger phrases:**
-- "Run Zulip digest"
-- "What's happening in Zulip"
-- Automatically piped into daily-routine if `zulip-checkin: true`
+- "Comms digest"
+- "What's happening in [your chat tool]"
+- Automatically piped into daily-routine if `comms-checkin: true`
 
 ### What it does
 
-Pulls the last N hours from Zulip, runs tiered digest (Python pre-filter → Haiku per-stream → Sonnet meta-digest), and writes `digest.md` to the palace or a configured output path.
+Pulls the last N hours from your team communication tool, runs tiered digest, and writes `digest.md` to the palace or a configured output path.
 
-Requires the Zulip module: `modules/zulip-crawler/`. See that folder for setup.
+Requires a comms integration module in `modules/`. See the relevant module's README for setup. Example integrations: Slack, Zulip, Discord, Linear.
 
 ### Agent Protocol
 
 ```
-1. Check that modules/zulip-crawler/ is configured (.env present)
-2. Run: python modules/zulip-crawler/main.py --out [palace-root]/soul/digest.md
+1. Check that modules/[comms-integration]/ is configured (.env present)
+2. Run the module's main script: python modules/[comms-integration]/main.py --out [palace-root]/soul/digest.md
 3. Read digest.md
 4. Surface: decisions, blockers, @mentions, key threads
 5. Feed into morning check-in if daily-routine is running
 ```
 
 If not configured:
-> "Zulip digest isn't set up yet. It takes about 5 minutes — want to do that now? See `modules/zulip-crawler/README.md`."
+> "Comms digest isn't set up yet. It takes about 5 minutes — want to do that now? See your integration module's README in modules/."
 
 ---
 
