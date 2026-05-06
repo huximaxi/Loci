@@ -8,7 +8,7 @@ set -e
 MSG="${1:-update — $(date '+%Y-%m-%d')}"
 
 echo "→ Staging changes..."
-git add index.html index-old.html start.html about.html comparison.html style.css style-wizard.css skin-toggle.js fold.js llms.txt llms-full.txt robots.txt deploy.sh
+git add index.html index-old.html about.html comparison.html style.css style-wizard.css skin-toggle.js fold.js llms.txt llms-full.txt robots.txt deploy.sh
 git add assets/ seed/
 
 echo "→ Committing: $MSG"
@@ -18,13 +18,13 @@ echo "→ Syncing to VPS..."
 rsync -avz \
   --exclude='.git' --exclude='.DS_Store' \
   --exclude='dispatches' --exclude='Design System*' \
-  --exclude='download.html' \
+  --exclude='download.html' --exclude='start.html' \
   -e "ssh -p 2222 -i ~/.ssh/id_ed25519_huximaxi" \
   ./ hux@195.246.230.118:/home/hux/loci-garden/
 
 echo "→ Removing hidden pages..."
 ssh -p 2222 -i ~/.ssh/id_ed25519_huximaxi hux@195.246.230.118 \
-  'rm -f /home/hux/loci-garden/download.html'
+  'rm -f /home/hux/loci-garden/download.html /home/hux/loci-garden/start.html'
 
 echo "→ Fixing permissions..."
 ssh -p 2222 -i ~/.ssh/id_ed25519_huximaxi hux@195.246.230.118 \
