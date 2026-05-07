@@ -8,7 +8,7 @@ set -e
 MSG="${1:-update — $(date '+%Y-%m-%d')}"
 
 echo "→ Staging changes..."
-git add index.html index-old.html about.html comparison.html style.css style-wizard.css skin-toggle.js fold.js llms.txt llms-full.txt robots.txt deploy.sh
+git add index.html about.html comparison.html guide.html style.css style-wizard.css skin-toggle.js fold.js llms.txt llms-full.txt robots.txt deploy.sh
 git add assets/ seed/
 
 echo "→ Committing: $MSG"
