@@ -1,11 +1,11 @@
 #!/bin/bash
-# loci.garden — deploy script
+# loci.garden - deploy script
 # Run from loci-garden/ directory.
 # Usage: ./deploy.sh "optional commit message"
 
 set -e
 
-MSG="${1:-update — $(date '+%Y-%m-%d')}"
+MSG="${1:-update - $(date '+%Y-%m-%d')}"
 
 echo "→ Staging changes..."
 git add index.html about.html comparison.html guide.html style.css style-wizard.css skin-toggle.js fold.js llms.txt llms-full.txt robots.txt deploy.sh
